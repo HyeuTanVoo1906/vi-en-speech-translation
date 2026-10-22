@@ -1,0 +1,42 @@
+{
+  "seed": 42,
+  "train": {
+    "total": 2977999,
+    "ratio": 17604,
+    "length": 13629,
+    "duplicate": 652,
+    "kept": 2946114,
+    "sampled": 300000
+  },
+  "dev": {
+    "total": 18719,
+    "ratio": 100,
+    "length": 74,
+    "duplicate": 1,
+    "identical": 1,
+    "kept": 18543,
+    "sampled": 2000
+  },
+  "tone_style": {
+    "phomt_train_vi": {
+      "old_style": 66053,
+      "new_style": 1,
+      "share_new": 0.0
+    },
+    "fleurs_dev_gold": {
+      "old_style": 133,
+      "new_style": 70,
+      "share_new": 0.345
+    },
+    "fleurs_dev_B0_hyp": {
+      "old_style": 149,
+      "new_style": 39,
+      "share_new": 0.207
+    },
+    "fleurs_dev_B1_hyp": {
+      "old_style": 102,
+      "new_style": 60,
+      "share_new": 0.37
+    }
+  }
+}
