@@ -1,0 +1,283 @@
+Hình thức: Project nhóm
+
+Quy mô nhóm: 2 – 3 sinh viên
+
+Số đề tài: 4 đề tài cố định. Mỗi nhóm chỉ được chọn 1 trong 4, không được tự đề xuất đề tài khác.
+
+Link đăng ký nhóm:
+
+https://docs.google.com/spreadsheets/d/1baDBvbr8jLpmsuEg28YeQQUgpY0xkw30RHq6gCjsY88/edit?usp=sharing
+
+1. MỤC TIÊU
+Sau khi hoàn thành project, sinh viên có khả năng:
+
+Thực hiện toàn bộ vòng đời của một dự án Deep Learning: từ xây dựng dữ liệu, xử lý, huấn luyện, đánh giá cho đến triển khai demo.
+Biết đặt baseline hợp lý và đề xuất cải tiến có cơ sở, có đối chứng (ablation).
+Lựa chọn đúng metric đánh giá cho bài toán, phân tích lỗi (error analysis) và rút ra kết luận khoa học.
+Đóng gói mô hình thành sản phẩm demo có thể sử dụng được.
+2. QUY ĐỊNH CHUNG
+Nhóm gồm 2 – 3 thành viên. Không làm cá nhân, không nhóm quá 3 người.
+Mỗi nhóm chọn đúng 1 trong 4 đề tài ở Mục 5. Không được đổi phạm vi đề tài (có thể thu hẹp bài toán nhỏ nhưng phải báo giảng viên trước và đảm bảo giữ nguyên input/output chính).
+Mỗi thành viên phải có đóng góp rõ ràng (ghi trong báo cáo và lịch sử commit Git). Điểm cá nhân có thể chênh lệch theo mức đóng góp.
+Mã nguồn quản lý bằng Git (GitHub/GitLab), commit đều đặn, không nộp một lần cuối kỳ.
+Được phép dùng mô hình/trọng số pretrained và thư viện mã nguồn mở, nhưng phải trích dẫn nguồn đầy đủ. Sao chép nguyên mã/báo cáo của người khác không ghi nguồn bị xử lý theo quy chế về liêm chính học thuật.
+Kết quả phải tái lập được (cố định seed, ghi rõ môi trường, cấu hình, phiên bản thư viện).
+3. CÁC BƯỚC BẮT BUỘC (PIPELINE)
+Mọi nhóm phải thực hiện lần lượt đầy đủ các bước sau và có minh chứng trong báo cáo/repo.
+
+Bước 1. Xây dựng bộ dữ liệu
+Được phép: (a) tải dataset công khai trên mạng, (b) tự thu thập/tự gán nhãn (tự build), hoặc (c) kết hợp cả hai.
+Yêu cầu tối thiểu:
+Mô tả nguồn dữ liệu, giấy phép sử dụng (license), quy mô (số mẫu, thời lượng, độ phân giải...).
+Mô tả định dạng nhãn và quy trình gán nhãn (nếu tự build): công cụ, quy tắc, kiểm tra chất lượng nhãn.
+Thống kê dữ liệu (EDA): phân bố lớp, độ dài/kích thước, mất cân bằng, nhiễu...
+Chia train / validation / test hợp lý, không rò rỉ dữ liệu (data leakage). Với dữ liệu dạng chuỗi/video/đa camera, phải chia theo người nói/cảnh/video/vật thể, không chia ngẫu nhiên theo từng khung/mẫu.
+Khuyến khích tự build thêm một tập test riêng (dù nhỏ) để đánh giá tính tổng quát.
+Bước 2. Xử lý dữ liệu (Data Processing)
+Làm sạch, chuẩn hoá, loại bỏ mẫu lỗi/trùng lặp.
+Tiền xử lý phù hợp từng bài toán (ví dụ: resample, trích đặc trưng âm thanh, resize/normalize ảnh, chuẩn hoá nhãn, tokenization...).
+Data augmentation có chủ đích và có giải thích.
+Xây dựng Dataset/DataLoader (hoặc tương đương) có thể tái sử dụng.
+Bước 3. Chạy Baseline
+Chọn ít nhất 1 baseline rõ ràng, có thể là:
+mô hình pretrained chạy zero-shot / không fine-tune, hoặc
+mô hình đơn giản/kinh điển của bài toán.
+Báo cáo kết quả baseline trên cùng tập test và cùng metric với giải pháp đề xuất.
+Baseline là mốc so sánh bắt buộc; không có baseline thì không được tính phần đề xuất giải pháp.
+Bước 4. Đề xuất giải pháp
+Nêu vấn đề/hạn chế quan sát được của baseline (có phân tích lỗi minh hoạ).
+Đề xuất giải pháp cải tiến có động cơ rõ ràng (kiến trúc, loss, dữ liệu, chiến lược huấn luyện, hậu xử lý, ghép module...).
+Phải có ablation study: chứng minh từng thành phần đóng góp bao nhiêu.
+Bước 5. Xây dựng / huấn luyện mô hình
+Sinh viên chọn một (hoặc kết hợp) hướng sau, phải giải thích lý do chọn:
+
+Xây dựng và huấn luyện mô hình từ đầu (from scratch);
+Pretrain (tự pretrain / self-supervised) rồi fine-tune;
+Fine-tune mô hình pretrained (full fine-tune hoặc PEFT như LoRA/adapter);
+Supervised learning thông thường; hoặc các hướng khác phù hợp (semi-/self-supervised, distillation, ...).
+Yêu cầu: có log huấn luyện (loss/metric theo epoch, learning curve), bảng siêu tham số, mô tả phần cứng và thời gian huấn luyện, lưu checkpoint.
+
+Bước 6. Đánh giá bằng Metric
+Dùng metric chuẩn của bài toán (gợi ý ở từng đề tài), báo cáo trên tập test.
+Báo cáo định lượng (bảng so sánh baseline vs đề xuất) và định tính (ví dụ thành công/thất bại).
+Có phân tích lỗi theo nhóm (điều kiện nhiễu, kích thước nhỏ, ánh sáng, người nói khác nhau...).
+Báo cáo thêm tốc độ suy luận (latency/FPS/RTF) và kích thước mô hình.
+Bước 7. Demo mô hình
+Bắt buộc: demo bằng Gradio hoặc Streamlit, chạy được trên máy giảng viên hoặc qua link public.
+Demo phải nhận đúng input và hiển thị đúng output của đề tài (xem Mục 5).
+Điểm cộng (tuỳ chọn):
+Đóng gói mô hình thành API bằng FastAPI (có tài liệu endpoint, schema, xử lý lỗi).
+Triển khai CI/CD (GitHub Actions/GitLab CI...): tự động lint/test/build Docker image và deploy (Hugging Face Spaces, Render, VPS, cloud...).
+4. SẢN PHẨM NỘP
+STT	Sản phẩm	Yêu cầu
+1	Source code	Repo Git sạch, có README.md hướng dẫn cài đặt/huấn luyện/suy luận, requirements.txt hoặc environment.yml, cấu trúc thư mục rõ ràng
+2	Báo cáo (PDF, 15 – 25 trang)	Theo cấu trúc ở Mục 6
+3	Slide thuyết trình	12 – 20 slide, trình bày 15 – 20 phút
+4	Demo	Gradio/Streamlit chạy được + video demo ngắn (2 – 5 phút) dự phòng
+5	Dữ liệu & checkpoint	Link tải dataset (hoặc script tải), trọng số mô hình tốt nhất
+6	Bảng phân công	Công việc và tỷ lệ đóng góp của từng thành viên
+Cấu trúc repo gợi ý
+project-name/
+├── README.md
+├── requirements.txt
+├── data/                # script tải/tiền xử lý (không đẩy dữ liệu nặng lên Git)
+├── notebooks/           # EDA, phân tích lỗi
+├── src/
+│   ├── dataset/
+│   ├── models/
+│   ├── train.py
+│   ├── evaluate.py
+│   └── inference.py
+├── configs/
+├── app/                 # gradio_app.py hoặc streamlit_app.py
+├── api/                 # (điểm cộng) FastAPI
+├── docker/              # (điểm cộng) Dockerfile
+├── .github/workflows/   # (điểm cộng) CI/CD
+└── reports/
+5. DANH SÁCH 4 ĐỀ TÀI
+ĐỀ TÀI 1: Hệ thống nhận dạng giọng nói (ASR) tiếng Việt kèm dịch sang tiếng Anh
+5.1.1. Mô tả
+Xây dựng hệ thống nhận dạng giọng nói tiếng Việt và dịch nội dung sang tiếng Anh.
+
+Input: (a) file âm thanh (wav/mp3/flac...) hoặc (b) thu âm real-time từ microphone.
+Output: (1) transcript tiếng Việt và (2) bản dịch tiếng Anh tương ứng với transcript.
+5.1.2. Yêu cầu chức năng
+Xử lý được cả chế độ offline (upload file) và real-time (thu âm trực tiếp, hiển thị kết quả theo từng đoạn/câu).
+Xử lý được âm thanh dài (chia đoạn bằng VAD hoặc cửa sổ trượt), có tự động chuẩn hoá tần số lấy mẫu.
+Hiển thị song song transcript tiếng Việt và bản dịch tiếng Anh (có thể kèm mốc thời gian).
+5.1.3. Hướng tiếp cận gợi ý
+Kiến trúc cascade: ASR (vi) → Machine Translation (vi→en).
+Kiến trúc end-to-end (nâng cao): Speech Translation trực tiếp từ audio sang văn bản tiếng Anh, so sánh với cascade.
+ASR: Conformer/Transformer/CTC/RNN-T, wav2vec 2.0 / XLS-R, Whisper (fine-tune), PhoWhisper...
+MT: Transformer (từ đầu trên cặp song ngữ), mBART, MarianMT, mT5, NLLB, VinAI Translate (fine-tune).
+Có thể thêm: mô hình ngôn ngữ (LM) để rescoring, thêm dấu câu/viết hoa (punctuation restoration), chuẩn hoá số/ký hiệu.
+5.1.4. Dữ liệu gợi ý
+ASR tiếng Việt: VIVOS, Common Voice (vi), VLSP ASR, FPT Open Speech Dataset (FOSD), VietMed, ViMD, LibriVox tiếng Việt, v.v.
+Dịch vi–en: PhoMT, IWSLT15 en–vi, OPUS (OpenSubtitles, TED...), MTet...
+Tự build (khuyến khích): thu âm thêm theo nhiều giọng vùng miền (Bắc/Trung/Nam), nhiều môi trường nhiễu, gán nhãn transcript; có thể dịch/ kiểm tra bản dịch tiếng Anh cho tập test nhỏ.
+5.1.5. Baseline gợi ý
+Whisper (zero-shot) cho ASR; mô hình MT pretrained (zero-shot) cho dịch; ghép cascade.
+5.1.6. Metric đánh giá
+Thành phần	Metric
+ASR	WER, CER (phân tích riêng lỗi thay thế/chèn/xoá)
+Dịch	BLEU (sacreBLEU), chrF++, (điểm cộng: COMET/BERTScore)
+End-to-end (cascade)	BLEU tính trên bản dịch từ audio so với bản dịch tham chiếu
+Hiệu năng	RTF (Real-Time Factor), độ trễ real-time, kích thước mô hình
+5.1.7. Điểm cần chú ý / thử thách
+Lỗi ASR lan truyền sang MT (error propagation), giọng vùng miền, thanh điệu, từ mượn/tên riêng, nhiễu nền, độ trễ streaming, chia câu khi âm thanh dài.
+
+5.1.8. Yêu cầu demo
+Giao diện có: upload file / nút thu âm → hiển thị transcript tiếng Việt và bản dịch tiếng Anh.
+
+ĐỀ TÀI 2: Hệ thống theo dõi người (Person Tracking) đa camera và phát hiện hành vi bất thường
+5.2.1. Mô tả
+Một căn phòng (cửa hàng tiện lợi hoặc trung tâm triển lãm) được xem là không gian 2D (mặt phẳng sàn). Hệ thống giám sát bằng 4 camera đặt ở 4 góc phòng.
+
+Nhiệm vụ:
+
+Theo dõi khách ra/vào không gian giám sát (đếm người vào/ra, gán ID nhất quán).
+Theo dõi liên tục từng khách trên nhiều camera (multi-camera tracking), chiếu vị trí lên bản đồ 2D của căn phòng.
+Phát hiện hành vi bất thường, ví dụ:
+giấu vật phẩm vào người/túi,
+gây hỏng/làm rơi vật phẩm,
+(có thể mở rộng) các hành vi đáng ngờ khác do nhóm định nghĩa và giải thích.
+Khi phát hiện bất thường: ghi nhận sự kiện ngay lập tức, tiếp tục theo dõi đối tượng đó và chụp lại hình sau 30 giây (tính từ thời điểm phát hiện).
+Lưu ý làm rõ: "chụp hình lại sau 30 giây" được hiểu là: tại thời điểm phát hiện, hệ thống lưu bằng chứng ban đầu (ảnh/clip ngắn), sau đó đối tượng vẫn được theo dõi và hệ thống chụp thêm ảnh đối tượng ở thời điểm +30 giây. Nhóm ghi rõ cách hiểu và xử lý trường hợp đối tượng rời khỏi vùng quan sát trước khi hết 30 giây.
+
+5.2.2. Yêu cầu chức năng
+Phát hiện + theo dõi người trong từng camera (detection + tracking).
+Re-identification (ReID) để giữ cùng một ID khi người chuyển giữa các camera.
+Ánh xạ vị trí người từ ảnh camera sang toạ độ 2D của phòng (ví dụ homography/hiệu chỉnh camera) và hiển thị trên bản đồ.
+Mô-đun phát hiện hành vi bất thường (phân loại hành động/video, hoặc phát hiện bất thường dựa trên pose/chuỗi thời gian).
+Cơ chế log sự kiện: ID, thời điểm, camera, vị trí 2D, loại hành vi, ảnh bằng chứng t=0 và t=+30s.
+5.2.3. Hướng tiếp cận gợi ý
+Detection: YOLO, RT-DETR, Faster R-CNN...
+Tracking: SORT/DeepSORT, ByteTrack, BoT-SORT, OC-SORT.
+ReID: OSNet, TransReID, FastReID, mô hình huấn luyện bằng triplet loss/metric learning.
+Hành vi: pose estimation (HRNet/ViTPose) + GCN/Transformer; video classification (SlowFast, VideoMAE, TimeSformer, X3D); anomaly detection (autoencoder, MIL ranking).
+Dữ liệu đa camera có thể mô phỏng/tự quay trong phòng thực tế hoặc môi trường mô phỏng (Unity/Unreal/CARLA-style/Blender...) nếu không có thiết bị.
+5.2.4. Dữ liệu gợi ý
+Tracking: MOT17/MOT20, WILDTRACK, EPFL Multi-camera Pedestrian, CAMPUS, MMPTRACK (đa camera trong môi trường cửa hàng), v.v.
+ReID: Market-1501, DukeMTMC-reID (nếu còn khả dụng theo license), MSMT17, CUHK03.
+Hành vi bất thường/trộm cắp: UCF-Crime, ShanghaiTech Campus, UBnormal, DCSASS, các tập shoplifting công khai.
+Tự build (khuyến khích mạnh): tự quay các cảnh khách mua sắm có kịch bản (hành vi bình thường & bất thường – có diễn viên là chính thành viên nhóm), gán nhãn ID và hành vi. Phải đảm bảo xin phép/đồng ý của người xuất hiện trong video và tuân thủ quyền riêng tư.
+5.2.5. Baseline gợi ý
+Detector pretrained + ByteTrack/DeepSORT chạy từng camera độc lập (chưa liên kết đa camera) và bộ phân loại hành vi đơn giản.
+5.2.6. Metric đánh giá
+Thành phần	Metric
+Detection	mAP@0.5, mAP@0.5:0.95
+Tracking	MOTA, IDF1, HOTA, ID switches
+ReID đa camera	Rank-1, mAP, CMC; hoặc multi-camera IDF1
+Đếm vào/ra	Sai số đếm (MAE)
+Hành vi bất thường	Precision, Recall, F1, AUC-ROC (mức khung hoặc mức sự kiện), tỷ lệ báo động giả (false alarm)
+Quy tắc 30 giây	Tỷ lệ sự kiện chụp lại đúng đối tượng ở t=+30s
+Hiệu năng	FPS toàn hệ thống (4 luồng)
+5.2.7. Điểm cần chú ý / thử thách
+Che khuất (occlusion), đồng phục/quần áo giống nhau, thay đổi ánh sáng giữa các camera, đồng bộ thời gian 4 camera, dữ liệu hành vi bất thường hiếm và mất cân bằng, cân bằng giữa phát hiện sớm và báo động giả.
+
+5.2.8. Yêu cầu demo
+Giao diện hiển thị video 4 camera (hoặc video đã ghi sẵn), bản đồ 2D có vị trí & ID từng người, bảng log sự kiện bất thường kèm ảnh bằng chứng tại t=0 và t=+30s.
+
+ĐỀ TÀI 3: Hệ thống Transformer biến đổi ảnh 2D sang 3D
+5.3.1. Mô tả
+Xây dựng hệ thống dựa trên kiến trúc Transformer để chuyển đổi hình ảnh 2D thành biểu diễn 3D.
+
+Input: một (hoặc một vài) ảnh 2D.
+Output: mô hình/hình ảnh 3D tương ứng.
+Vì "hình ảnh 3D" có nhiều dạng biểu diễn, nhóm phải chọn và nêu rõ dạng output (một trong các dạng sau), đồng thời hiển thị trực quan được trong demo:
+
+Point cloud (đám mây điểm), hoặc
+Mesh (lưới tam giác, xuất .obj/.ply/.glb), hoặc
+Voxel/Occupancy, hoặc
+Depth map / bản đồ độ sâu kết hợp dựng lại 3D, hoặc
+Tri-plane / NeRF / 3D Gaussian Splatting kèm render nhiều góc nhìn mới (novel view).
+5.3.2. Yêu cầu chức năng
+Mô hình phải có thành phần Transformer (ví dụ ViT encoder, Transformer decoder, cross-attention hoặc kiến trúc encoder–decoder đầy đủ).
+Suy luận được từ ảnh bất kỳ do người dùng tải lên (trong phạm vi lớp đối tượng huấn luyện).
+Xuất được file 3D để người dùng tải về/xem được (xoay, phóng to).
+Phạm vi gợi ý: bắt đầu từ đối tượng đơn lẻ (ví dụ: ghế, bàn, xe, đồ vật trong ShapeNet) thay vì cảnh phức tạp.
+5.3.3. Hướng tiếp cận gợi ý
+Baseline: CNN encoder + decoder đơn giản (ví dụ Pix2Vox, hoặc encoder-decoder sinh point cloud); mô hình ước lượng độ sâu pretrained (MiDaS, DPT, Depth Anything) rồi back-project thành point cloud.
+Đề xuất: ViT/Swin encoder + Transformer decoder dự đoán point cloud/occupancy/triplane; tham khảo ý tưởng từ LRM, TripoSR, Point-E, Shap-E, PointTr, 3D-R2N2 → Pix2Vox → 3D-RETR/EVolT...
+Kỹ thuật: pretrain trên ảnh (DINOv2/CLIP) rồi fine-tune cho 3D; loss Chamfer/Earth Mover; loss render (silhouette, photometric); data augmentation đa góc nhìn.
+5.3.4. Dữ liệu gợi ý
+ShapeNet / ShapeNetCore (kèm ảnh render 3D-R2N2), Pix3D (ảnh thật + mô hình 3D), ModelNet, Objaverse / Objaverse-XL, CO3D, ScanNet (nâng cao), NYU Depth v2 / KITTI (nếu hướng depth).
+Tự build (khuyến khích): tự render nhiều góc nhìn từ mô hình 3D bằng Blender/PyTorch3D, hoặc quét/chụp đồ vật thật rồi dựng lại 3D bằng photogrammetry (COLMAP, Polycam...) để làm ground truth/tập test.
+5.3.5. Metric đánh giá
+Dạng output	Metric
+Point cloud / Mesh	Chamfer Distance (CD), F-score@τ, Earth Mover's Distance (EMD), Normal Consistency
+Voxel	IoU (3D)
+Depth	AbsRel, RMSE, δ < 1.25
+Novel view synthesis	PSNR, SSIM, LPIPS
+Hiệu năng	Thời gian suy luận/ảnh, số tham số, bộ nhớ GPU
+5.3.6. Điểm cần chú ý / thử thách
+Bài toán không xác định đầy đủ (ill-posed): thông tin phần bị che khuất; khoảng cách miền giữa ảnh render và ảnh thật (domain gap); chuẩn hoá hệ toạ độ/tỉ lệ; chi phí bộ nhớ của biểu diễn 3D; đánh giá định tính cần đi kèm số liệu.
+
+5.3.7. Yêu cầu demo
+Upload ảnh 2D → hiển thị mô hình 3D tương tác (xoay/zoom) và cho phép tải file .obj/.ply/.glb; (nếu có) hiển thị depth map hoặc ảnh render nhiều góc.
+
+ĐỀ TÀI 4: Phát hiện và nhận dạng người từ trên cao (Aerial/Top-view Person Detection & Recognition)
+5.4.1. Mô tả
+Xây dựng hệ thống phát hiện và nhận dạng người trong ảnh/video chụp từ trên cao (UAV/drone, camera gắn trần/camera giám sát góc nhìn từ trên xuống).
+
+Input: ảnh hoặc video góc nhìn từ trên cao.
+Output: bounding box quanh từng người, kèm nhãn/lớp và độ tin cậy; (với video) kèm ID theo dõi.
+Phần "nhận dạng" được định nghĩa tối thiểu là phân loại đối tượng (ví dụ: người đi bộ / người nói chung – đứng, ngồi, đi xe..., hoặc phân biệt người với đối tượng dễ nhầm). Nhóm có thể mở rộng thành: nhận dạng tư thế/hành động cơ bản (đứng, ngồi, nằm, chạy), hoặc tái nhận dạng (ReID) giữa các khung/video. Nhóm phải nêu rõ phạm vi "nhận dạng" trong báo cáo ngay từ đầu.
+
+5.4.2. Yêu cầu chức năng
+Phát hiện người kích thước nhỏ, mật độ dày, nhiều tỷ lệ ở nhiều độ cao khác nhau.
+Xử lý được ảnh độ phân giải cao (ví dụ chia ảnh thành các mảnh – tiling/SAHI) và video.
+Hiển thị kết quả có bounding box, nhãn, điểm tin cậy; thống kê số lượng người trong khung hình.
+(Mở rộng, điểm cộng) Theo dõi người qua các khung hình, vẽ quỹ đạo/heatmap mật độ.
+5.4.3. Hướng tiếp cận gợi ý
+Baseline: YOLO (v5/v8/v11...) hoặc Faster R-CNN/RetinaNet pretrained trên COCO, chạy trực tiếp (zero-shot) hoặc fine-tune cơ bản.
+Đề xuất: thêm đầu phát hiện độ phân giải cao (P2), attention/Transformer neck, FPN cải tiến cho vật thể nhỏ, tăng độ phân giải đầu vào, SAHI (slicing inference), augmentation đặc thù (xoay mọi hướng, scale lớn/nhỏ, copy-paste), loss cho vật thể nhỏ (NWD, Focal/Wise-IoU), distillation, RT-DETR/Transformer-based detector.
+Có thể kết hợp oriented bounding box vì người nhìn từ trên cao có hướng bất kỳ.
+5.4.4. Dữ liệu gợi ý
+VisDrone (DET/MOT), UAVDT, TinyPerson, Okutama-Action, Stanford Drone Dataset, SeaDronesSee, HERIDAL (người trong cứu hộ), DOTA (tham khảo), WiderPerson/CrowdHuman (góc thường, dùng để pretrain/so sánh), CityPersons, v.v.
+Tự build (khuyến khích): tự bay drone (tuân thủ quy định bay & quyền riêng tư) hoặc dùng camera trên cao, thu video và gán nhãn bằng CVAT/LabelImg/Roboflow; hoặc sinh dữ liệu từ mô phỏng (CARLA, AirSim, Unity).
+5.4.5. Metric đánh giá
+Nội dung	Metric
+Detection	mAP@0.5, mAP@0.5:0.95, AP_small / AP_medium / AP_large
+Chất lượng phát hiện	Precision, Recall, F1 tại ngưỡng chọn, đường PR
+Phân loại/nhận dạng	Accuracy, F1 theo lớp, confusion matrix
+Đếm người	MAE, RMSE giữa số người dự đoán và thực tế
+(Nếu có tracking)	MOTA, IDF1, HOTA
+Hiệu năng	FPS, latency, số tham số, FLOPs (đánh giá khả năng chạy trên thiết bị biên)
+5.4.6. Điểm cần chú ý / thử thách
+Người rất nhỏ (vài chục pixel), nền phức tạp, che khuất bởi cây/mái che, mật độ dày, thay đổi độ cao/góc nghiêng, mờ chuyển động của drone, mất cân bằng dữ liệu, cân bằng độ chính xác với tốc độ khi tăng độ phân giải.
+
+5.4.7. Yêu cầu demo
+Upload ảnh/video → hiển thị kết quả với bounding box, nhãn, số lượng người; cho phép chỉnh ngưỡng confidence/IoU; (tuỳ chọn) bật/tắt SAHI để so sánh.
+
+6. CẤU TRÚC BÁO CÁO
+Giới thiệu bài toán: động cơ, input/output, phạm vi, đóng góp chính.
+Tổng quan/Công trình liên quan: các phương pháp hiện có, dữ liệu, metric.
+Dữ liệu: nguồn, cách build, thống kê, chia tập, xử lý, augmentation.
+Baseline: mô tả, cấu hình, kết quả.
+Phương pháp đề xuất: kiến trúc, loss, chiến lược huấn luyện; sơ đồ hệ thống.
+Thực nghiệm: cài đặt, siêu tham số, phần cứng; bảng kết quả so sánh; ablation study; phân tích lỗi; kết quả định tính.
+Demo & triển khai: kiến trúc ứng dụng, hướng dẫn sử dụng; (nếu có) FastAPI, Docker, CI/CD.
+Kết luận & hướng phát triển: ưu/nhược điểm, hạn chế, việc cần làm tiếp.
+Tài liệu tham khảo (chuẩn IEEE/APA) và Phụ lục: phân công công việc.
+7. RUBIC ĐIỂM
+Tiêu chí	Điểm
+Xây dựng & xử lý dữ liệu (nguồn, chất lượng, EDA, chia tập, không leak)	15
+Baseline (đúng, đầy đủ, có kết quả tin cậy)	10
+Đề xuất giải pháp & xây dựng mô hình (tính hợp lý, mới, ablation)	25
+Đánh giá (metric phù hợp, phân tích lỗi, thí nghiệm đầy đủ)	15
+Demo Gradio/Streamlit (chạy ổn định, đúng input/output)	10
+Báo cáo & slide (rõ ràng, chặt chẽ, trích dẫn)	10
+Chất lượng code & tái lập (Git, README, cấu trúc)	5
+Thuyết trình & trả lời vấn đáp	10
+Tổng	100
+Điểm cộng: FastAPI (+3), Docker + CI/CD & deploy chạy thật (+5), tự build dữ liệu quy mô đáng kể (+2)	tối đa +10
+Điểm cuối cùng của mỗi cá nhân = điểm nhóm × hệ số đóng góp cá nhân (xác định qua vấn đáp, lịch sử Git và bảng phân công). Tổng điểm tối đa không vượt quá thang điểm của môn học.
+
+9. LIÊM CHÍNH HỌC THUẬT & ĐẠO ĐỨC DỮ LIỆU
+Trích dẫn đầy đủ mọi nguồn: bài báo, mã nguồn, dataset, mô hình pretrained.
+Tuân thủ license của dữ liệu và mô hình; không công khai dữ liệu có quyền riêng tư.
+Dữ liệu tự thu thập có hình ảnh/giọng nói người thật phải có sự đồng ý của người được thu và che/ẩn thông tin nhạy cảm khi công bố.
+Không dùng dữ liệu test để huấn luyện hoặc chọn siêu tham số (chỉ dùng validation).
+Có thể dùng công cụ AI hỗ trợ, nhưng nhóm phải hiểu và giải thích được mọi phần của dự án khi vấn đáp; ghi chú rõ phần nào sử dụng công cụ hỗ trợ.
+Chúc các bạn hoàn thành tốt project
