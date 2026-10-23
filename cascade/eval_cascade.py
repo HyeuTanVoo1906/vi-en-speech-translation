@@ -11,9 +11,11 @@ ap.add_argument("--batch", type=int, default=32)
 ap.add_argument("--tag", default="M0")
 ap.add_argument("--unify-tone", action="store_true")
 ap.add_argument("--adapter", default=None)
+ap.add_argument("--verbalize", action="store_true")
 args = ap.parse_args()
 from common.textnorm import unify_tone
-prep = unify_tone if args.unify_tone else (lambda s: s)
+from MT.mt.noise import verbalize_numbers
+prep = unify_tone if args.unify_tone else ((lambda s: verbalize_numbers(s)) if args.verbalize else (lambda s: s))
 
 def read(p):
     return [json.loads(l) for l in open(p, encoding="utf-8")]
