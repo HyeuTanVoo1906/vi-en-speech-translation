@@ -1,0 +1,74 @@
+{
+ "fleurs_dev_B0_digits": {
+  "wer": 0.11331798119362886,
+  "cer": 0.07357350832210682,
+  "sub": 802,
+  "del": 58,
+  "ins": 321,
+  "ref_words": 10422,
+  "utts": 361
+ },
+ "fleurs_dev_B0_verbalized": {
+  "wer": 0.08924872905290905,
+  "cer": 0.05087954395592709,
+  "sub": 723,
+  "del": 81,
+  "ins": 144,
+  "ref_words": 10622,
+  "utts": 361
+ },
+ "fleurs_dev_B1_digits": {
+  "wer": 0.2464977931299175,
+  "cer": 0.12463604363130677,
+  "sub": 2001,
+  "del": 145,
+  "ins": 423,
+  "ref_words": 10422,
+  "utts": 361
+ },
+ "fleurs_dev_B1_verbalized": {
+  "wer": 0.26652231218226324,
+  "cer": 0.14670410312041351,
+  "sub": 2103,
+  "del": 325,
+  "ins": 403,
+  "ref_words": 10622,
+  "utts": 361
+ },
+ "fleurs_test_B0_digits": {
+  "wer": 0.12316974751162522,
+  "cer": 0.07811397356705378,
+  "sub": 2094,
+  "del": 131,
+  "ins": 980,
+  "ref_words": 26021,
+  "utts": 857
+ },
+ "fleurs_test_B0_verbalized": {
+  "wer": 0.0973657510052234,
+  "cer": 0.054652842695674345,
+  "sub": 1906,
+  "del": 213,
+  "ins": 472,
+  "ref_words": 26611,
+  "utts": 857
+ },
+ "fleurs_test_B1_digits": {
+  "wer": 0.22535644287306406,
+  "cer": 0.11042768402435943,
+  "sub": 5004,
+  "del": 436,
+  "ins": 424,
+  "ref_words": 26021,
+  "utts": 857
+ },
+ "fleurs_test_B1_verbalized": {
+  "wer": 0.2490323550411484,
+  "cer": 0.13554006968641116,
+  "sub": 5293,
+  "del": 968,
+  "ins": 366,
+  "ref_words": 26611,
+  "utts": 857
+ }
+}
