@@ -1,4 +1,4 @@
-﻿import argparse, json, time
+import argparse, json, time
 from sacrebleu.metrics import BLEU, CHRF
 from MT.mt.model import Translator
 
@@ -9,7 +9,10 @@ ap.add_argument("--asr", nargs="+", default=["gold", "B0", "B1"])
 ap.add_argument("--limit", type=int, default=0)
 ap.add_argument("--batch", type=int, default=32)
 ap.add_argument("--tag", default="M0")
+ap.add_argument("--unify-tone", action="store_true")
 args = ap.parse_args()
+from common.textnorm import unify_tone
+prep = unify_tone if args.unify_tone else (lambda s: s)
 
 def read(p):
     return [json.loads(l) for l in open(p, encoding="utf-8")]
@@ -23,7 +26,7 @@ for a in args.asr:
     if args.limit:
         rows = rows[: args.limit]
     for v, k in keys.items():
-        inputs[(a, v)] = ([r["id"] for r in rows], [r[k] for r in rows], [r["en_ref"] for r in rows])
+        inputs[(a, v)] = ([r["id"] for r in rows], [prep(r[k]) for r in rows], [r["en_ref"] for r in rows])
 
 tr = Translator(args.mt)
 flat = [s for ids, srcs, refs in inputs.values() for s in srcs]
