@@ -10,6 +10,7 @@ ap.add_argument("--limit", type=int, default=0)
 ap.add_argument("--batch", type=int, default=32)
 ap.add_argument("--tag", default="M0")
 ap.add_argument("--unify-tone", action="store_true")
+ap.add_argument("--adapter", default=None)
 args = ap.parse_args()
 from common.textnorm import unify_tone
 prep = unify_tone if args.unify_tone else (lambda s: s)
@@ -28,7 +29,7 @@ for a in args.asr:
     for v, k in keys.items():
         inputs[(a, v)] = ([r["id"] for r in rows], [prep(r[k]) for r in rows], [r["en_ref"] for r in rows])
 
-tr = Translator(args.mt)
+tr = Translator(args.mt, adapter=args.adapter)
 flat = [s for ids, srcs, refs in inputs.values() for s in srcs]
 t0 = time.time()
 flat_out = tr.translate(flat, batch_size=args.batch, desc=f"{args.mt} {args.set_name}")
