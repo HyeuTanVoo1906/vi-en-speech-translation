@@ -1,0 +1,34 @@
+{
+  "mt": "vinai",
+  "tag": "M4_s44",
+  "set": "fleurs_dev",
+  "seconds": 687.3,
+  "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.6.0",
+  "chrf_signature": "nrefs:1|case:mixed|eff:yes|nc:6|nw:2|space:no|version:2.6.0",
+  "scores": {
+    "gold/raw": {
+      "bleu": 37.32,
+      "chrf++": 61.37
+    },
+    "gold/norm": {
+      "bleu": 32.96,
+      "chrf++": 59.38
+    },
+    "B0/raw": {
+      "bleu": 26.22,
+      "chrf++": 52.38
+    },
+    "B0/norm": {
+      "bleu": 26.21,
+      "chrf++": 52.93
+    },
+    "B1/raw": {
+      "bleu": 18.5,
+      "chrf++": 45.19
+    },
+    "B1/norm": {
+      "bleu": 17.95,
+      "chrf++": 44.9
+    }
+  }
+}
