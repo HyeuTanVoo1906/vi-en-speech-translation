@@ -1,4 +1,4 @@
-﻿import argparse, json, os, tempfile
+﻿import argparse, json, os, tempfile, traceback
 import gradio as gr
 from common.textnorm import normalize_text
 from MT.mt.noise import verbalize_numbers
@@ -14,6 +14,7 @@ args = ap.parse_args()
 ST = SpeechTranslator(asr_adapter=args.asr_adapter, mt_adapter=args.mt_adapter)
 HEADERS = ["Bắt đầu (s)", "Kết thúc (s)", "Tiếng Việt (ASR)", "English"]
 WAVE = gr.WaveformOptions(show_recording_waveform=False)
+SESS = {}
 
 
 def run_audio(path):
@@ -44,41 +45,53 @@ def run_text(text, as_asr):
     return ST.mt.translate([src], batch_size=1, desc="mt")[0]
 
 
-def _view(sess):
-    rows = [[g["start"], g["end"], g["vi"], g["en"]] for g in sess.segments]
-    vi = " ".join(g["vi"] for g in sess.segments)
-    en = " ".join(g["en"] for g in sess.segments)
-    status = ("Đang nói..." if sess.speaking else "Đang nghe...") + f" ({len(sess.segments)} đoạn đã dịch)"
+def _view(sess, note=""):
+    with sess.lock:
+        segs = list(sess.segments)
+    rows = [[g["start"], g["end"], g["vi"], g["en"]] for g in segs]
+    vi = " ".join(g["vi"] for g in segs)
+    en = " ".join(g["en"] for g in segs)
+    pv, pe = sess.partial_vi, sess.partial_en
+    if pv:
+        rows.append([sess.partial_start, "đang nói…", pv, pe])
+        vi = (vi + " " + pv).strip()
+        en = (en + " " + pe).strip()
+    status = note or (("Đang nói..." if sess.speaking else "Đang nghe...") + f" ({len(segs)} câu đã chốt)")
     return rows, vi, en, status
 
 
-def stream_fn(audio, sess):
+def _drop(key):
+    old = SESS.pop(key, None)
+    if old is not None:
+        old.close()
+    return old
+
+
+def stream_fn(audio, request: gr.Request):
+    key = request.session_hash
+    sess = SESS.get(key)
     if sess is None:
-        sess = StreamSession(ST)
+        sess = SESS[key] = StreamSession(ST)
     try:
         if audio is not None:
             sr, chunk = audio
             sess.push(sr, chunk)
     except Exception as e:
-        rows, vi, en, _ = _view(sess)
-        return sess, rows, vi, en, f"Lỗi: {e}"
-    return (sess,) + _view(sess)
+        traceback.print_exc()
+        return _view(sess, f"Lỗi: {e}")
+    return _view(sess)
 
 
-def stream_stop(sess):
+def stream_stop(request: gr.Request):
+    sess = _drop(request.session_hash)
     if sess is None:
-        return None, [], "", "", "Chưa ghi âm."
-    try:
-        sess.flush()
-    except Exception as e:
-        rows, vi, en, _ = _view(sess)
-        return sess, rows, vi, en, f"Lỗi: {e}"
-    rows, vi, en, _ = _view(sess)
-    return sess, rows, vi, en, f"Đã dừng. {len(sess.segments)} đoạn."
+        return [], "", "", "Chưa ghi âm."
+    return _view(sess, f"Đã dừng. {len(sess.segments)} câu đã dịch.")
 
 
-def stream_reset():
-    return None, [], "", "", "Đang nghe..."
+def stream_reset(request: gr.Request):
+    _drop(request.session_hash)
+    return [], "", "", "Đang nghe..."
 
 
 with gr.Blocks(title="Vietnamese speech to English") as demo:
@@ -91,17 +104,16 @@ with gr.Blocks(title="Vietnamese speech to English") as demo:
             a2 = gr.Audio(sources=["microphone"], type="filepath", label="Ghi âm", waveform_options=WAVE)
             b2 = gr.Button("Dịch", variant="primary")
         with gr.Tab("Micro trực tiếp (real-time)"):
-            gr.Markdown("Nhấn ghi âm và nói. Mỗi khi bạn dừng khoảng 1 giây, câu vừa nói sẽ được nhận dạng và dịch ngay, trong lúc micro vẫn mở.")
+            gr.Markdown("Nhấn ghi âm và nói. Bạn nói đến đâu, bản dịch tạm hiện ra đến đó (cập nhật khoảng mỗi giây, dòng cuối cùng ghi \"đang nói…\"). Khi bạn dừng khoảng nửa giây, câu được chốt thành một dòng cố định.")
             mic = gr.Audio(sources=["microphone"], streaming=True, type="numpy", label="Nói vào micro", waveform_options=WAVE)
-            rt_state = gr.State(None)
             rt_status = gr.Markdown("Chưa ghi âm.")
             rt_table = gr.Dataframe(headers=HEADERS, wrap=True, label="Các câu đã dịch")
             rt_vi = gr.Textbox(label="Tiếng Việt (ASR)", lines=3)
             rt_en = gr.Textbox(label="English", lines=3)
-            rt_outs = [rt_state, rt_table, rt_vi, rt_en, rt_status]
-            mic.stream(stream_fn, [mic, rt_state], rt_outs, stream_every=0.5, time_limit=None)
+            rt_outs = [rt_table, rt_vi, rt_en, rt_status]
+            mic.stream(stream_fn, mic, rt_outs)
             mic.start_recording(stream_reset, None, rt_outs)
-            mic.stop_recording(stream_stop, rt_state, rt_outs)
+            mic.stop_recording(stream_stop, None, rt_outs)
         with gr.Tab("Văn bản sang English"):
             t_in = gr.Textbox(lines=4, label="Văn bản tiếng Việt")
             t_asr = gr.Checkbox(value=False, label="Xử lý như đầu ra ASR (viết thường, bỏ dấu câu, đọc số thành chữ)")
