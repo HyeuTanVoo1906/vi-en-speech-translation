@@ -1,0 +1,53 @@
+# V5 — V4 recipe on the larger backbone PhoWhisper-medium (769M params vs 244M). Same data (V3 vsplit), LoRA, SpecAugment, seed.
+# Why: published results improve with size (PhoWhisper VIVOS WER small 6.33 -> medium 4.97 -> large 4.67; ViMedCSS zero-shot
+# small 36.31 -> large 31.24), and V3/V4 are near the ceiling of what small can learn from this data (VietMed edge errors,
+# unseen terms). Compare with V4 / V4B on the same V3 DEV (ViMedCSS re-split by video).
+# Deviations from V4, forced by the 6 GB GPU / wall time (all recorded here so the comparison stays honest):
+#   - model.dtype float16: frozen base in half precision (fp32 medium = 3.1 GB of weights alone, over the 4.5 GB budget);
+#   - lr 2e-4 (V4 3e-4; larger model) and 2 epochs (~1870 steps; V3 had already plateaued by step 1800 of 2802);
+#   - train.local_eval_steps 467: DEV-subset eval + checkpoint 4 times, the last at the final step (~40 min per eval).
+model:
+  name: local/models/PhoWhisper-medium-fp16   # vinai/PhoWhisper-medium converted to fp16 safetensors (the 3 GB fp32 .bin segfaults at load with ~3 GB free RAM)
+  dtype: float16
+  lora:
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, out_proj, fc1, fc2]
+  spec_augment:
+    mask_time_prob: 0.05
+    mask_time_length: 10
+    mask_feature_prob: 0.05
+    mask_feature_length: 10
+
+data:
+  train_sources:
+    _replace: true           # do not inherit _base's official ViMedCSS (it contains the new DEV/TEST videos)
+    VIVOS: null
+    FLEURS: null
+    VietMed: null
+    ViMedCSS_vsplit: null
+  eval_sources: [VIVOS, FLEURS, VietMed, ViMedCSS_vsplit]
+  train_exclude: v3_train_exclude.json
+
+train:
+  epochs: 2
+  batch_size: 16
+  grad_accum: 2              # effective batch 32 (local runs use profile batch 1 x accum 32)
+  lr: 2.0e-4
+  warmup_ratio: 0.05
+  fp16: true
+  gradient_checkpointing: true
+  eval_steps: 467
+  save_steps: 467
+  local_eval_steps: 467       # max_steps = 2 x (29913 clips // 32) = 1868 = 4 x 467: the last eval is the final step (Trainer never evaluates at the end by itself)
+  local_batch_size: 2         # profile batch 1 x accum 32 -> 2 x 16: same effective batch, ~30% faster (peak alloc 2.76 GB)
+  save_total_limit: 2
+  logging_steps: 50
+  num_workers: 2
+  eval_batch_size: 2           # V4 used 8; medium: 8 fails ("bad allocation"), 4 peaks at 3.0 GB alloc / 4.2 GB total (too close to the 4.5 GB budget)
+
+eval:
+  silence_peak: 1.0e-3
+  max_tokens_per_second: 12
+  max_tokens_offset: 20

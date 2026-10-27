@@ -1,0 +1,8 @@
+# B1G — B1 (Whisper-small zero-shot) decoded with the same guards as V1G (see V1G for the TRAIN-derived rules).
+model:
+  name: openai/whisper-small
+
+eval:
+  silence_peak: 1.0e-3
+  max_tokens_per_second: 12
+  max_tokens_offset: 20

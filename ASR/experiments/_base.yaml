@@ -1,0 +1,27 @@
+# Shared defaults. Each experiments/<ID>/config.yaml only overrides what differs.
+seed: 13
+
+model:
+  name: vinai/PhoWhisper-small
+  language: vi
+  task: transcribe
+  lora: null                 # null = no LoRA (zero-shot, or full fine-tune if `train` is set)
+
+data:
+  dir: data                  # relative to ASR/ ; override with --data-dir on Colab
+  normalize_text: true       # lowercase + strip punctuation for train targets (same rule as scoring)
+  max_duration: 30.0         # Whisper window
+  train_sources:             # source: max_hours (null = all of that source's train split)
+    VIVOS: null
+    FLEURS: null
+    VietMed: null
+    ViMedCSS: null
+  eval_sources: [VIVOS, FLEURS, VietMed, ViMedCSS]
+  dev_max_per_source: 150    # in-training dev subset (keeps eval cheap); full dev via evaluate.py
+
+train: null                  # null = evaluation-only experiment (baseline)
+
+eval:
+  batch_size: 16
+  num_beams: 1
+  max_new_tokens: 225

@@ -1,0 +1,23 @@
+{
+  "B0": {
+    "max_sampled_gpu_total_gb": 1.741160448,
+    "max_process_ram_gb": 1.59223808
+  },
+  "V1": {
+    "max_sampled_gpu_total_gb": 2.72891904,
+    "max_process_ram_gb": 1.875484672
+  },
+  "checkpoint_resume": {
+    "resumed_from_step": 1,
+    "completed_step": 2,
+    "files_verified": [
+      "adapter_model.safetensors",
+      "optimizer.pt",
+      "scheduler.pt",
+      "rng_state.pth",
+      "scaler.pt",
+      "trainer_state.json"
+    ]
+  },
+  "note": "Tiny synthetic plumbing fixture from VietMed only. NOT ASR benchmark results; not full-data memory guarantee."
+}

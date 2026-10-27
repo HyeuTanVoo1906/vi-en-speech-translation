@@ -1,0 +1,4 @@
+# B0 — PhoWhisper-small zero-shot (no training). Reference point for every V* built on PhoWhisper.
+# Exposure note: PhoWhisper was fine-tuned on VIVOS -> VIVOS dev/test numbers are optimistic.
+model:
+  name: vinai/PhoWhisper-small

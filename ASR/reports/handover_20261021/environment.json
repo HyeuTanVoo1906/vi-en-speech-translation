@@ -1,0 +1,11 @@
+{
+  "python": "3.10.8 (tags/v3.10.8:aaaf517, Oct 11 2022, 16:50:30) [MSC v.1933 64 bit (AMD64)]",
+  "torch": "2.6.0+cu124",
+  "torchaudio": "2.6.0+cu124",
+  "transformers": "4.46.3",
+  "peft": "0.13.2",
+  "accelerate": "1.1.1",
+  "sentencepiece": "0.2.0",
+  "ctranslate2": null,
+  "faster-whisper": null
+}

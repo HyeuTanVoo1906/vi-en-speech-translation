@@ -1,0 +1,27 @@
+# V2 — continue V1: warm-start from the V1 best adapter (local_v1 checkpoint-2600) with a 10x lower LR.
+# V1 at lr 1e-3 diverged around steps 660-900 (loss 0.4 -> 4.6, grad_norm up to 480) and only improved
+# once the linear decay brought the LR below ~3e-4; its best DEV-subset WER (0.1339) came at the low-LR end.
+# Same data, LoRA shape and DEV subset as V1, so eval_wer curves are directly comparable.
+model:
+  name: vinai/PhoWhisper-small
+  lora:                      # must match the init adapter; also used to load V2/final for evaluation
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, out_proj, fc1, fc2]
+  init_adapter: local/runs/V1_phowhisper_small_lora/local_v1/final   # relative to ASR/
+
+train:
+  epochs: 2
+  batch_size: 16
+  grad_accum: 2              # effective batch 32
+  lr: 1.0e-4
+  warmup_ratio: 0.05
+  fp16: true
+  gradient_checkpointing: true
+  eval_steps: 500
+  save_steps: 500
+  save_total_limit: 2
+  logging_steps: 50
+  num_workers: 2
+  eval_batch_size: 8         # local in-training DEV-subset decoding; V1 used 1 and spent ~50% of wall time there

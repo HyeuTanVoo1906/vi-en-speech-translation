@@ -1,0 +1,12 @@
+# B0V — B0 (PhoWhisper-small zero-shot) on the V3 evaluation sources (ViMedCSS re-split by video), with the
+# guarded decoding of V1G. The reference point for V3. VIVOS exposure note of B0 applies.
+model:
+  name: vinai/PhoWhisper-small
+
+data:
+  eval_sources: [VIVOS, FLEURS, VietMed, ViMedCSS_vsplit]
+
+eval:
+  silence_peak: 1.0e-3
+  max_tokens_per_second: 12
+  max_tokens_offset: 20

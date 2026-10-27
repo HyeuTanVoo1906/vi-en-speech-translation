@@ -1,0 +1,14 @@
+# V2G — V2 adapter decoded with the same guards as V1G (rules and their TRAIN derivation: see V1G).
+model:
+  name: vinai/PhoWhisper-small
+  lora:
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, out_proj, fc1, fc2]
+
+eval:
+  checkpoint: local/runs/V2_phowhisper_small_lora_cont/local_v2/final   # relative to ASR/
+  silence_peak: 1.0e-3
+  max_tokens_per_second: 12
+  max_tokens_offset: 20

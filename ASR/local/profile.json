@@ -1,0 +1,11 @@
+{
+  "total_gpu_budget_gb": 4.5,
+  "gpu_duty_cycle": 0.7,
+  "host_ram_budget_gb": 0,
+  "save_steps": 100,
+  "checkpoint_interval_seconds": 600,
+  "save_total_limit": 2,
+  "batch_size": 1,
+  "grad_accum": 32,
+  "num_workers": 0
+}

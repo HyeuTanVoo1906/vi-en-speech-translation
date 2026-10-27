@@ -1,0 +1,9 @@
+# B0G — B0 (PhoWhisper-small zero-shot) decoded with the same guards as V1G (see V1G for the TRAIN-derived rules).
+# Exposure note from B0 applies: PhoWhisper was fine-tuned on VIVOS -> VIVOS numbers are optimistic.
+model:
+  name: vinai/PhoWhisper-small
+
+eval:
+  silence_peak: 1.0e-3
+  max_tokens_per_second: 12
+  max_tokens_offset: 20

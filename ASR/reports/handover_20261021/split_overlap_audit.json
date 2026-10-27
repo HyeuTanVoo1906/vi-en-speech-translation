@@ -1,0 +1,74 @@
+[
+  {
+    "source": "FLEURS",
+    "split": "dev",
+    "id": 0,
+    "group_id": 0,
+    "speaker_id": 0,
+    "normalized_text": 0
+  },
+  {
+    "source": "FLEURS",
+    "split": "test",
+    "id": 0,
+    "group_id": 0,
+    "speaker_id": 0,
+    "normalized_text": 0
+  },
+  {
+    "source": "VietMed",
+    "split": "dev",
+    "id": 0,
+    "group_id": 0,
+    "speaker_id": 0,
+    "normalized_text": 0
+  },
+  {
+    "source": "VietMed",
+    "split": "test",
+    "id": 0,
+    "group_id": 0,
+    "speaker_id": 0,
+    "normalized_text": 0
+  },
+  {
+    "source": "ViMedCSS",
+    "split": "dev",
+    "id": 1,
+    "group_id": 909,
+    "speaker_id": 0,
+    "normalized_text": 48
+  },
+  {
+    "source": "ViMedCSS",
+    "split": "hard",
+    "id": 0,
+    "group_id": 248,
+    "speaker_id": 0,
+    "normalized_text": 1
+  },
+  {
+    "source": "ViMedCSS",
+    "split": "test",
+    "id": 2,
+    "group_id": 898,
+    "speaker_id": 0,
+    "normalized_text": 44
+  },
+  {
+    "source": "VIVOS",
+    "split": "dev",
+    "id": 0,
+    "group_id": 0,
+    "speaker_id": 0,
+    "normalized_text": 2
+  },
+  {
+    "source": "VIVOS",
+    "split": "test",
+    "id": 0,
+    "group_id": 0,
+    "speaker_id": 0,
+    "normalized_text": 178
+  }
+]

@@ -1,0 +1,19 @@
+# V1G — V1 adapter decoded with two guards (evaluation only; no training).
+# Rules fit on TRAIN only (29,061 clips), never on DEV:
+#   silence_peak 1e-3 (~-60 dBFS): 43 TRAIN clips below it, all ViMedCSS (37 are exact zeros); the quietest
+#     clips with real speech (FLEURS) peak near 1e-2. Silent clip -> empty hypothesis, model not run.
+#   max_new_tokens = min(225, ceil(12 * duration_s) + 20): only 6 TRAIN references (0.02%) need more.
+#     Bounds repetition loops on short clips; >= 18 s clips keep the original 225 cap.
+model:
+  name: vinai/PhoWhisper-small
+  lora:
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, out_proj, fc1, fc2]
+
+eval:
+  checkpoint: local/runs/V1_phowhisper_small_lora/local_v1/final   # relative to ASR/
+  silence_peak: 1.0e-3
+  max_tokens_per_second: 12
+  max_tokens_offset: 20

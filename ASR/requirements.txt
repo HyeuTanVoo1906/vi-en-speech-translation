@@ -1,0 +1,11 @@
+# Colab đã có sẵn torch + CUDA; chỉ cài phần còn thiếu.
+# Phiên bản được ghim để tái lập; phiên bản thực tế của mỗi lần chạy được ghi vào experiments/<ID>/runs.jsonl.
+transformers==4.46.3
+peft==0.13.2
+accelerate==1.1.1
+datasets==3.1.0
+jiwer==3.0.4
+soundfile==0.12.1
+soxr==0.5.0
+pyarrow>=15
+pyyaml>=6

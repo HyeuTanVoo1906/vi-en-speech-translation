@@ -1,0 +1,18 @@
+# V4B — V4 adapter decoded with beam search (5 beams); same guards and V3 DEV. Evaluation only (run after V4 trains).
+model:
+  name: vinai/PhoWhisper-small
+  lora:
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, out_proj, fc1, fc2]
+
+data:
+  eval_sources: [VIVOS, FLEURS, VietMed, ViMedCSS_vsplit]
+
+eval:
+  checkpoint: local/runs/V4_phowhisper_small_lora_vsplit_specaug/local_v4/final   # relative to ASR/
+  num_beams: 5
+  silence_peak: 1.0e-3
+  max_tokens_per_second: 12
+  max_tokens_offset: 20

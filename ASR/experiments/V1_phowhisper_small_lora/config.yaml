@@ -1,0 +1,23 @@
+# V1 — PhoWhisper-small + LoRA on the 4-source mixture. Compare against B0 on the same dev split.
+# Sized for a Colab T4 (16 GB). On OOM: lower batch_size and raise grad_accum (keep their product).
+model:
+  name: vinai/PhoWhisper-small
+  lora:
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, out_proj, fc1, fc2]
+
+train:
+  epochs: 3
+  batch_size: 16
+  grad_accum: 2              # effective batch 32
+  lr: 1.0e-3                 # typical for LoRA; full fine-tune would be ~1e-5
+  warmup_ratio: 0.05
+  fp16: true                 # T4 has no bf16
+  gradient_checkpointing: true
+  eval_steps: 500
+  save_steps: 500            # must be a multiple of eval_steps (best-model tracking)
+  save_total_limit: 2        # keeps best + latest on Drive
+  logging_steps: 50
+  num_workers: 2

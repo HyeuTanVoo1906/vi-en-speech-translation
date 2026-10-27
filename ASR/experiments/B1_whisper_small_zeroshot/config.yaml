@@ -1,0 +1,3 @@
+# B1 — Whisper-small (multilingual) zero-shot. Initialization control for B0 (same family/size, same decoding).
+model:
+  name: openai/whisper-small
