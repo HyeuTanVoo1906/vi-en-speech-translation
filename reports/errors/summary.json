@@ -1,0 +1,13 @@
+{
+ "so_cau": 361,
+ "asr_b0_dev": {
+  "wer_pct": 11.33,
+  "thay_the_pct": 7.7,
+  "xoa_pct": 0.56,
+  "chen_pct": 3.08
+ },
+ "nhan_xet": {
+  "ti_le_cau_wer_bang_0_pct": 24.4,
+  "tu_thay_the_chi_khac_thanh_pct_tren_tu_thay_the": 4.7
+ }
+}
