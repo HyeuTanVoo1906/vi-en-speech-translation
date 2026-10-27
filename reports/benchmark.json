@@ -1,0 +1,46 @@
+{
+ "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+ "gpu_total_gb": 6.44,
+ "torch": "2.6.0+cu124",
+ "mt_adapter": "runs/mt/M4_s42/adapter",
+ "asr_adapter": null,
+ "load_time_s": 9.2,
+ "vram_after_load_gb": 1.356,
+ "models": {
+  "st.vad": {
+   "tham_so_trieu": 0.5,
+   "dung_luong_mb": 1.9
+  },
+  "st.asr": {
+   "tham_so_trieu": 241.7,
+   "dung_luong_mb": 483.5
+  },
+  "st.mt.model": {
+   "tham_so_trieu": 423.2,
+   "dung_luong_mb": 846.4
+  }
+ },
+ "mt_adapter_disk_mb": 34.7,
+ "do_tre": {
+  "so_clip": 20,
+  "tong_audio_s": 229.1,
+  "tong_thoi_gian_xu_ly_s": 19.4,
+  "RTF_tong": 0.085,
+  "RTF_tung_khau": {
+   "vad_s": 0.008,
+   "asr_s": 0.047,
+   "mt_s": 0.03
+  },
+  "do_tre_moi_clip_s": {
+   "trung_binh": 0.97,
+   "p50": 0.98,
+   "p95": 1.31,
+   "max": 1.38
+  },
+  "audio_trung_binh_s": 11.5,
+  "vram_dinh_gb": {
+   "allocated": 1.48,
+   "reserved": 1.59
+  }
+ }
+}
