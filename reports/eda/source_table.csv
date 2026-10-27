@@ -1,0 +1,8 @@
+﻿Nguồn,Loại,Số mẫu,Số câu duy nhất,Số giờ audio,Định dạng,Dung lượng (MB),Trường dữ liệu
+FLEURS vi_vn (train),Online (google/fleurs),2994,1482,9.08,wav 16 kHz mono + jsonl,1045.7,"id, source, split, fleurs_sentence_id, gender, audio_path, duration, text_raw, text_norm, en_ref"
+FLEURS vi_vn (dev),Online (google/fleurs),361,149,1.19,wav 16 kHz mono + jsonl,275.2,"id, source, split, fleurs_sentence_id, gender, audio_path, duration, text_raw, text_norm, en_ref, flores_split, flores_id"
+FLEURS vi_vn (test),Online (google/fleurs),857,347,3.0,wav 16 kHz mono + jsonl,692.1,"id, source, split, fleurs_sentence_id, gender, audio_path, duration, text_raw, text_norm, en_ref, flores_split, flores_id"
+FLoRes+ eng (devtest),Online (openlanguagedata/flores_plus),496,,,jsonl (cột en_ref),,"en_ref, flores_id, flores_split"
+PhoMT train (mẫu 300k),Online (vinai/PhoMT),300000,,,parquet,99.72,"vi, en, vi_norm, vi_asr, vi_rand, vi_num"
+PhoMT dev (mẫu 2k),Online (vinai/PhoMT),2000,,,parquet,0.7,"vi, en, vi_norm, vi_asr, vi_rand, vi_num"
+Tự thu âm (Offline),Offline,0,0,0,,0,chưa có

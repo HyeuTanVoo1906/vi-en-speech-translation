@@ -1,0 +1,4 @@
+﻿Tập,Số mẫu,Tỷ lệ (%),Số câu duy nhất,Số giờ
+FLEURS train,2994,71.1,1482,9.08
+FLEURS dev,361,8.6,149,1.19
+FLEURS test,857,20.3,347,3.0

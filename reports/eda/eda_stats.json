@@ -1,0 +1,154 @@
+{
+ "phomt_audit": {
+  "seed": 42,
+  "train": {
+   "total": 2977999,
+   "ratio": 17604,
+   "length": 13629,
+   "duplicate": 652,
+   "kept": 2946114,
+   "sampled": 300000
+  },
+  "dev": {
+   "total": 18719,
+   "ratio": 100,
+   "length": 74,
+   "duplicate": 1,
+   "identical": 1,
+   "kept": 18543,
+   "sampled": 2000
+  },
+  "tone_style": {
+   "phomt_train_vi": {
+    "old_style": 66053,
+    "new_style": 1,
+    "share_new": 0.0
+   },
+   "fleurs_dev_gold": {
+    "old_style": 133,
+    "new_style": 70,
+    "share_new": 0.345
+   },
+   "fleurs_dev_B0_hyp": {
+    "old_style": 149,
+    "new_style": 39,
+    "share_new": 0.207
+   },
+   "fleurs_dev_B1_hyp": {
+    "old_style": 102,
+    "new_style": 60,
+    "share_new": 0.37
+   }
+  }
+ },
+ "fleurs_split_pct": {
+  "FLEURS train": 71.1,
+  "FLEURS dev": 8.6,
+  "FLEURS test": 20.3
+ },
+ "fleurs_gender_pct": {
+  "train": {
+   "nữ": 74.4,
+   "nam": 25.6
+  },
+  "dev": {
+   "nam": 100.0
+  },
+  "test": {
+   "nam": 100.0
+  }
+ },
+ "length_bucket_pct": {
+  "FLEURS train": {
+   "1-10 từ": 0.6,
+   "11-20 từ": 18.9,
+   "21-30 từ": 40.4,
+   ">30 từ": 40.0
+  },
+  "PhoMT 300k": {
+   "1-10 từ": 42.7,
+   "11-20 từ": 28.9,
+   "21-30 từ": 14.9,
+   ">30 từ": 13.6
+  }
+ },
+ "domain_gap": {
+  "PhoMT": {
+   "% câu có chữ số": 12.88,
+   "% câu có chữ hoa": 98.6,
+   "% câu có dấu câu": 97.4,
+   "% câu có dấu thanh kiểu mới": 0.13,
+   "số từ trung vị": 12.0,
+   "số từ p95": 43.0
+  },
+  "FLEURS (text gốc)": {
+   "% câu có chữ số": 21.7,
+   "% câu có chữ hoa": 99.91,
+   "% câu có dấu câu": 99.79,
+   "% câu có dấu thanh kiểu mới": 12.94,
+   "số từ trung vị": 28.0,
+   "số từ p95": 48.0
+  }
+ },
+ "duration_s": {
+  "train": {
+   "count": 2994.0,
+   "mean": 10.91,
+   "std": 3.72,
+   "min": 2.52,
+   "25%": 8.28,
+   "50%": 10.38,
+   "75%": 12.9,
+   "max": 42.18
+  },
+  "dev": {
+   "count": 361.0,
+   "mean": 11.91,
+   "std": 4.61,
+   "min": 4.32,
+   "25%": 8.82,
+   "50%": 11.16,
+   "75%": 13.8,
+   "max": 31.98
+  },
+  "test": {
+   "count": 857.0,
+   "mean": 12.62,
+   "std": 4.67,
+   "min": 4.98,
+   "25%": 9.36,
+   "50%": 11.64,
+   "75%": 15.06,
+   "max": 38.1
+  }
+ },
+ "before_after_pct": {
+  "vi (gốc)": {
+   "% câu có chữ số": 12.88,
+   "% câu có chữ hoa": 98.6,
+   "% câu có dấu câu": 97.4
+  },
+  "vi_num (đọc số + chuẩn hoá)": {
+   "% câu có chữ số": 0.0,
+   "% câu có chữ hoa": 0.0,
+   "% câu có dấu câu": 0.0
+  },
+  "vi_asr (+ nhiễu kiểu ASR)": {
+   "% câu có chữ số": 0.3,
+   "% câu có chữ hoa": 0.0,
+   "% câu có dấu câu": 0.0
+  },
+  "vi_rand (+ nhiễu ngẫu nhiên)": {
+   "% câu có chữ số": 1.04,
+   "% câu có chữ hoa": 0.0,
+   "% câu có dấu câu": 0.0
+  }
+ },
+ "simulated_wer_vs_vi_num": {
+  "vi_asr": 7.41,
+  "vi_rand": 5.94,
+  "% câu bị thay đổi vi_asr": 53.95,
+  "% câu bị thay đổi vi_rand": 49.53
+ },
+ "b0_real_dev_wer": 8.92
+}
