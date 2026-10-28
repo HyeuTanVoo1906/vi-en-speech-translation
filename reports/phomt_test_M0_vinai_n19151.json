@@ -1,0 +1,14 @@
+{
+ "mt": "vinai",
+ "tag": "M0",
+ "adapter": null,
+ "set": "PhoMT test (detokenization)",
+ "n_sentences": 19151,
+ "full_test": true,
+ "seed": 42,
+ "seconds": 1803.0,
+ "bleu": 41.51,
+ "chrf++": 60.9,
+ "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.6.0",
+ "chrf_signature": "nrefs:1|case:mixed|eff:yes|nc:6|nw:2|space:no|version:2.6.0"
+}
